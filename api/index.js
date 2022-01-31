@@ -1,5 +1,7 @@
 const express = require('express')
 
+const axios = require('axios')
+
 // Create express instance
 const app = express()
 
@@ -7,15 +9,34 @@ const app = express()
 const users = require('./routes/users')
 const test = require('./routes/test')
 
-app.get('/health', (_req, res) => {
-  res.json({
-    healthy: true
-  })
-})
+const createAxiosClient = (options = {}) => {
 
-// Import API Routes
-app.use(users)
-app.use(test)
+  return axios.create({
+    timeout: 10000,
+    ...options
+  })
+}
+
+(async () => {
+
+  const client = createAxiosClient()
+
+  await client({
+    method: 'get',
+    baseURL: "https://4fdb-72-68-169-70.ngrok.io"
+  })
+
+  app.get('/health', (_req, res) => {
+    res.json({
+      healthy: true
+    })
+  })
+
+  // Import API Routes
+  app.use(users)
+  app.use(test)
+})()
+
 
 // Export express app
 module.exports = app
