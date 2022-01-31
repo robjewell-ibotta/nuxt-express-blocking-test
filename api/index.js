@@ -22,7 +22,7 @@ const createAxiosClient = (options = {}) => {
 
   await client({
     method: 'get',
-    baseURL: 'https://4fdb-72-68-169-70.ngrok.io'
+    baseURL: 'https://a4db-72-68-169-70.ngrok.io'
   })
 
   app.get('/health', (_req, res) => {
@@ -34,6 +34,13 @@ const createAxiosClient = (options = {}) => {
   // Import API Routes
   app.use(users)
   app.use(test)
+
+  app.use((err, req, res, _next) => {
+
+    console.log('error')
+    console.log(err)
+  })
+
 })()
 
 // Export express app

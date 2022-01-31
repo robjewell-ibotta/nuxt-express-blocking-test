@@ -23,15 +23,21 @@ const createAxiosClient = (options = {}) => {
 router.get('/users/suggestions', async function (req, res, next) {
   const client = createAxiosClient()
   console.log('requesting suggestions....')
-  const response = await client({
-    data: {offerTerms: 'test12', upcs: ['test']},
-    method: 'post',
-    baseURL: "https://4fdb-72-68-169-70.ngrok.io/suggestions"
-  })
+  try {
+    const response = await client({
+      data: {offerTerms: 'test12', upcs: ['test']},
+      method: 'post',
+      baseURL: "https://a4db-72-68-169-70.ngrok.io/suggestions"
+    })
 
-  res.json({
-    message: response.data
-  })
+    res.json({
+      message: response.data
+    })
+  } catch(err) {
+    console.log('error in catch')
+    console.log(err)
+  }
+
 })
 
 /* GET users listing. */
