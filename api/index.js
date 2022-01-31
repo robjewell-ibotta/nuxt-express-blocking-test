@@ -7,6 +7,12 @@ const app = express()
 const users = require('./routes/users')
 const test = require('./routes/test')
 
+app.get('/health', (_req, res) => {
+  res.json({
+    healthy: true
+  })
+})
+
 // Import API Routes
 app.use(users)
 app.use(test)
@@ -16,7 +22,7 @@ module.exports = app
 
 // Start standalone server if directly running
 if (require.main === module) {
-  const port = process.env.PORT || 3001
+  const port = 3000
   app.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(`API server listening on port ${port}`)
